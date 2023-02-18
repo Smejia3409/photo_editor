@@ -3,8 +3,7 @@ import os
 from photo import Photo
 
 
-path = "./imgs"
-path_out = './editedImgs'
+
 
 # for filename in os.listdir(path):
 #     img = Image.open(f"{path}/{filename}")

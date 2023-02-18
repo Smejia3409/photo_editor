@@ -5,7 +5,7 @@ import os
 def temp_save(filename, img):
     clean_name = os.path.splitext(filename)[0]
     # print(f"./editedImgs/{clean_name}.jpeg")
-    img.save(f"./editedImgs/{clean_name}.jpeg")
+    img.save(f"../editedImgs/{clean_name}.jpeg")
 
 # gets file clean file name
 
@@ -24,9 +24,9 @@ class Photo():
         #     f"./editedImgs/{os.path.splitext(filename)[0]}_editied.jpeg")
 
         # logic setup for path and filename
-        if os.path.isfile(f"./editedImgs/{os.path.splitext(filename)[0]}.jpeg"):
+        if os.path.isfile(f"../editedImgs/{os.path.splitext(filename)[0]}.jpeg"):
 
-            self.path = "./editedImgs"
+            self.path = "../editedImgs"
             self.filename = f"{clean_name(filename)}.jpeg"
             self.img = Image.open(f"{self.path}/{self.filename}")
 
