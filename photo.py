@@ -1,4 +1,4 @@
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 import os
 
 
@@ -45,14 +45,36 @@ class Photo():
         temp_save(self.filename, edit)
         print(self.filename + ":sharpened")
 
+    # blurs image
+    def blur(self):
+        print(self.path)
+        edit = self.img.filter(ImageFilter.BLUR)
+        temp_save(self.filename, edit)
+        print(self.filename + ":Blur")
+
+    # turns image to greyscale
     def greyscale(self):
         print(self.path)
         edit = self.img.convert("L")
         print(self.filename + ":Greyscale")
         temp_save(self.filename, edit)
 
-    def rotate(self):
+    # clockwise rotation
+    def rotate_cw(self):
         print(self.path)
         edit = self.img.rotate(-90)
         temp_save(self.filename, edit)
         print(self.filename + ":rotated")
+
+    # counter clockwise
+    def rotate_cc(self):
+        edit = self.img.rotate(90)
+        temp_save(self.filename, edit)
+        print(self.filename + ":counter clockwise")
+
+
+    def mirror(self):
+        edit = ImageOps.mirror(self.img)
+        temp_save(self.filename, edit)
+        print(self.filename + ":Mirror")
+

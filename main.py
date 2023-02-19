@@ -18,4 +18,4 @@ from photo import Photo
 
 photo = Photo("./imgs", "test.jpeg")
 
-photo.rotate()
+photo.flip_lr()
