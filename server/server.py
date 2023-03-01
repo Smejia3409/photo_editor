@@ -1,15 +1,12 @@
 from flask import Flask, flash, jsonify, request, redirect, url_for
 from flask import Flask, flash, redirect, render_template, request, url_for
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
-
-
-app = Flask(__name__)
+CORS(app)
 app.secret_key = "1234"
 UPLOAD_FOLDER = 'frontend/src/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -19,6 +16,13 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', ])
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
+# @app.after_request
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Origin', '*')
+
+#     return response
+
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -26,12 +30,12 @@ def allowed_file(filename):
 @app.route('/upload', methods=['POST'])
 def upload_file():
     # check if the post request has the file part
-    if 'files[]' not in request.files:
+    if 'files' not in request.files:
         resp = jsonify({'message': 'No file part in the request'})
         resp.status_code = 400
         return resp
 
-    files = request.files.getlist('files[]')
+    files = request.files.getlist('files')
 
     errors = {}
     success = False
@@ -52,6 +56,7 @@ def upload_file():
     if success:
         resp = jsonify({'message': 'Files successfully uploaded'})
         resp.status_code = 201
+        print(file)
         return resp
     else:
         resp = jsonify(errors)
